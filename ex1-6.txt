@@ -1,0 +1,2 @@
+It will recurse forever because there's no short-circuit evaluation with new-if
+
