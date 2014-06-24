@@ -6,7 +6,9 @@
 (define (sqr x) (expt x 2))
 
 
-(define (cuberoot x)(* 1.0 (cuberootiter 1 x 0)))
+(define (cuberoot_slow x)(* 1.0 (cuberootiter 1 x 0)))
+
+(define (cuberoot_fast x)(* 1.0 (cuberootiter 1.0 x 0)))
 
 (define (goodenough_old y x i)
   (if (< i 15)
@@ -44,11 +46,15 @@
 )
 
 
-(cuberoot 27)
-(cuberoot 64)
-(cuberoot 125)
-(cuberoot 8)
+(cuberoot_fast 27)
+(cuberoot_fast 64)
+(cuberoot_fast 125)
+(cuberoot_fast 8)
 
+(cuberoot_slow 27)
+(cuberoot_slow 64)
+(cuberoot_slow 125)
+(cuberoot_slow 8)
 
 
 
