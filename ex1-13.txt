@@ -1,0 +1,53 @@
+To demonstrate:
+
+Fib(n) = ((expt Φ n) - (expt Ψ n)) / (sqrt 5)
+
+We know that:
+
+Fib(n) = 0      n = 0
+         1      n = 1
+         Fib(n-1) + Fib(n-2)
+
+---------------------------------------
+
+For n = 0
+
+(1-1) / (sqrt 5) = 0 / sqrt(5) = 0
+
+For n = 1
+
+((expt Φ 1) - (expt Ψ 1)) / (sqrt 5) =(((1 + (sqrt 5)) / 2) - ((1 - (sqrt 5)) / 2)) / (sqrt 5) = 1
+
+ 
+
+Assume the following are true:
+ 
+Fib(n) = ((expt Φ n) - (expt Ψ n)) / (sqrt 5)
+Fib(n-1) = ((expt Φ n-1) - (expt Ψ n-1)) / (sqrt 5)
+
+Prove that:
+
+Fib(n+1) = ((expt Φ n+1) - (expt Ψ n+1)) / (sqrt 5)
+
+----------------------------------------
+
+Fib(n+1) = Fib(n) + Fib(n-1)
+
+Fib(n+1) = (((expt Φ n) - (expt Ψ n)) / (sqrt 5)) + (((expt Φ n-1) - (expt Ψ n-1)) / (sqrt 5)) 
+         = (((expt Φ n) - (expt Ψ n)) + ((expt Φ n-1) - (expt Ψ n-1))) / (sqrt 5)  
+         = ((expt Φ n) - (expt Ψ n) + (expt Φ n-1) - (expt Ψ n-1)) / (sqrt 5)
+         = (((expt Φ n) + (expt Φ n-1)) + ((expt Ψ n) + (expt Ψ n-1))) / (sqrt 5)
+         = (((expt Φ n+1) * ((expt Φ -1) + (expt Φ -2))) - ((expt Ψ n+1) * ((expt Ψ -1) + (expt Ψ -2)))) / (sqrt 5)
+         = (((expt Φ n+1) * (expt Φ -1) * (1 + (expt Φ -1))) - ((expt Ψ n+1) * (expt Ψ -1) * (1 + (expt Ψ -1)))) / (sqrt 5)
+         
+considering that 
+
+ 1 + (expt Φ -1) = Φ 
+ and
+ 1 + (expt Ψ -1) = Ψ
+
+
+        = (((expt Φ n+1) * (expt Φ -1) * Φ) - ((expt Ψ n+1) * (expt Ψ -1) * Ψ)) / (sqrt 5) 
+        = ((expt Φ n+1) - (expt Ψ n+1)) / (sqrt 5)
+
+proved
