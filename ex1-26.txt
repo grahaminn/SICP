@@ -1,0 +1,2 @@
+By multiplying (expmod base (/ exp 2) m) by itself each call to expmod call itself twice. 
+This results in a binary tree recursion which grows exponentially rather than linearly.
