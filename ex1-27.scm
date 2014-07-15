@@ -22,4 +22,4 @@
 (define (fast-timed-prime-test n)
   (newline) (display n) (start-fast-prime-test n (runtime)))
 
-(map (lambda (x) (dumb-fermat-test x)) '(561 1105 1729 2465 2821 6601))
+(map (lambda (x) (fast-timed-prime-test x)) '(561 1105 1729 2465 2821 6601))
