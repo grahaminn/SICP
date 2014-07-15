@@ -6,8 +6,8 @@
     (if (< a n)
       (if (= (expt a n) (modulo a n))
         (try-it (+ a 1))
-      (else false))
-    (else n)))
+      false)
+    n))
   (try-it 0))
 
 (define (fast-prime? n times)
@@ -22,4 +22,5 @@
 (define (fast-timed-prime-test n)
   (newline) (display n) (start-fast-prime-test n (runtime)))
 
+(map (lambda (x) (fast-timed-prime-test x)) '(2 3 5 7 9 11))
 (map (lambda (x) (fast-timed-prime-test x)) '(561 1105 1729 2465 2821 6601))
