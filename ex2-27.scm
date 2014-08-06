@@ -1,0 +1,6 @@
+(define (deep-reverse list)
+  (cond ((null? list) '())
+        ((pair? list) (let ((head (car list))
+                            (tail (cdr list)))
+                      (append (deep-reverse tail) (cons (deep-reverse head) '()))))
+        (else list)))

@@ -1,0 +1,1 @@
+New types are best serviced by the message-passing style. When new operations frequently required, explicit dispatch is required.

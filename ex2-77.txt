@@ -1,0 +1,1 @@
+it's evaluated twice. what we have here is basically a dynamic inheritance hierarchy.

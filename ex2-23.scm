@@ -1,0 +1,6 @@
+(define (for-each proc list)
+  (define (for-each-iter procedure list result) 
+    (if (null? list)
+      (newline)
+      (for-each-iter procedure (cdr list) (procedure (car list)))))
+  (for-each-iter proc list '()))

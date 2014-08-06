@@ -1,0 +1,8 @@
+(define (fringe list)
+  (cond ((null? list) '())
+        ((pair? list) (let ((head (car list))
+                            (tail (cdr list)))
+                      (if (pair? head)  
+                        (append (fringe head) (fringe tail))
+                        (cons head (fringe tail)))))
+        (else list)))

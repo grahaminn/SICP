@@ -1,0 +1,1 @@
+because it now has to map a function taking a proposed new row over the whole board size, rather than over the (growing) existing queens every time. I expect this to take twice as long, 2T. 
