@@ -1,36 +1,24 @@
-(define (search-type-coercions-iter type-tags type-tag-subs  op)
-  (if (pair? type-tag-subs)
-       (let ((t1->t2 (get-coercion type1 type2))
-       (map (lambda (x) (get-coercion x (car type-tag-subs))) type-tags) 
+(require-extension srfi-1) ; only needed for chicken scheme
 
+(define (get-coercions target_type type_tags)
+  (map (lambda (x) (get-coercion x target_type)) type_tags)
+)
 
-(define (search-type-coercions type-tags op)
-  (if (get op type-tags) 
-      type-tags
-      (search-type-coercions-iter type-tags type-tags op))) 
+(define (test-coercions coercions args) 
+  (= (length (filter (lambda (x) (not (null? x)))  coercions)) (length args))
+) 
 
-
-
-(define (apply-generic op . args)
+(define (apply-generic-iter try-types op . args)
   (let ((type-tags (map type-tag args)))
     (let ((proc (get op type-tags)))
       (if proc
-        (apply proc (map contents args))
-            (let ((type (car type-tags))
-                  (type2 (cadr type-tags))
-                  (a1 (car args))
-                  (a2 (cadr args)))
-              (let ((t1->t2 (get-coercion type1 type2))
-                    (t2->t1 (get-coercion type2 type1)))
-                (cond (t1->t2
-                       (apply-generic op (t1->t2 a1) a2))
-                      (t2->t1
-                       (apply-generic op a1 (t2->t1 a2)))
-                      (else
-                       (error "No method for these types"
-                              (list op type-tags))))))
-            (error "No method for these types"
-                   (list op type-tags))))))
+          (apply proc (map contents args))
+          (if (pair? try-types)
+              (let (try-type (car try-types))
+                (let ((coercions (get-coercions try-type type-tags)))
+                  (if (test-coercions coercions args) 
+                      (apply-generic op (map coercions args))
+                      (apply-generic-iter (cdr try-types) op args))))
+              (error "No method for these types" (list op type-tags)))))))
 
-
-
+; This method will miss cases where coercions to two different types are necessary 
