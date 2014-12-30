@@ -1,0 +1,40 @@
+(define (make-account balance password) 
+  (define (checkpass pass) (eq? pass password)) 
+  (define (withdraw amount)
+    (if (>= balance amount)
+        (begin (set! balance (- balance amount))
+               balance)
+        "Insufficient funds"))
+  (define (deposit amount)
+    (set! balance (+ balance amount))
+    balance)
+  (define (dispatch pass m)
+    (if (checkpass pass)
+      (cond ((eq? m 'withdraw) withdraw)
+            ((eq? m 'deposit) deposit)
+            ((eq? m 'checkpass) checkpass)
+            (else (error "Unknown request -- MAKE-ACCOUNT"
+                         m)))
+      (error "Incorrect password")
+    )
+  )
+  dispatch)
+
+(define acc (make-account 100 'secret-password))
+
+((acc 'secret-password 'withdraw) 40)
+
+(define (make-joint account password newpassword) 
+  (define (dispatch pass m)
+    (if (eq? pass newpassword)
+        (account password m)
+        (error "Incorrect password"))) 
+  (if ((account '() 'checkpass) password)
+      dispatch
+      (error "You are trying to create a joint account without authorisation!")
+  )
+)
+
+(define paul-acc (make-joint acc 'secret-password 'rosebud))
+
+((paul-acc 'rosebud 'withdraw) 20)
