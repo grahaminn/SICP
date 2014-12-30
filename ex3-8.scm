@@ -1,0 +1,15 @@
+(define flag 0)
+
+(define (f input)
+ (if (= flag 0)
+     (begin (set! flag 1) 0)
+     input))
+
+(display (+ (f 1) (f 0)))
+(newline)
+(define flag 0)
+(display (+ (f 0) (f 1)))
+(newline)
+(define flag 0)
+(display (+ (f 1) (f 0)))
+(newline)
