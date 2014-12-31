@@ -1,0 +1,10 @@
+(define (make-cycle x)
+  (set-cdr! (last-pair x) x)
+  x)
+
+
+(define z (make-cycle (list 'a 'b 'c)))
+
+; What happens if we try to compute (last-pair z)? 
+
+it will try and return z recursively
