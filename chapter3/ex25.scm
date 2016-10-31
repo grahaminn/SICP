@@ -8,48 +8,36 @@
         (assoc keys (cdr table)))
   )
 
+  (define (insert-iter! keys value table) 
     (let ((key (car keys)))
-    (if (pair? keys)
-        (let ((subtable (assoc key) (cdr table)))
+      (let ((subtable (assoc key (cdr table))))
+        (if (pair? keys)
           (if subtable 
             (insert-iter! (cdr keys) value subtable)
-            (let ((new-subtable (cons (list key <-think about struct of tables)
-            (set-cdr! table ))))
+              (let ((new-subtable '()))
+                (set-cdr! table (cons (list key new-subtable) (cdr table)))
+                (insert-iter! (cdr keys) value new-subtable))
+              )
 
-        (let ((record (assoc key (cdr subtable))))
-		  (if record
-		      (set-cdr! record value)
-			  (set-cdr! subtable (cons (cons key value)
-			   				           (cdr subtable))))))
-
-  (define (insert! keys value) (insert-iter! keys value local-table))
-
-  (define (create-record key value table) (cons (cons key value) (cdr table))) 
-              
+              (let ((record (assoc key (cdr subtable))))
+		        (if record
+		          (set-cdr! record value)
+			      (set-cdr! subtable ((cons key value)
+			   				          (cdr subtable)))))))))
 
   (let ((local-table (list '*table*)))
+    (define (insert! keys value) ((insert-iter! keys value local-table) 'ok))
 
+    (define (create-record key value table) (cons (cons key value) (cdr table))) 
+              
     (define (lookup keys) 
-		(let ((record (find-record keys local-table))
+			(let ((record (find-record keys local-table)))
               (if record
                   (cdr record)
-                  false))
-            false))
-        
-    (define (insert! keys value)
-      (let ((subtable (assoc key-1 (cdr local-table))))
-        (if subtable
-            (let ((record (assoc key-2 (cdr subtable))))
-              (if record
-                  (set-cdr! record value)
-                  (set-cdr! subtable (create-record key-2 value subtable)))))
-            (set-cdr! local-table 
-                      (cons (list key-1
-                                  (cons key-2 value))
-                            (cdr local-table)))))
-      'ok)    
+                  false))))
+
     (define (dispatch m)
       (cond ((eq? m 'lookup-proc) lookup)
             ((eq? m 'insert-proc!) insert!)
             (else (error "Unknown operation -- TABLE" m))))
-    dispatch))
+    dispatch)
